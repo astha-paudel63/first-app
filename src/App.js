@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import Counter from "./Counter";
 import React, { useState } from "react";
+import { isElementOfType } from "react-dom/test-utils";
 
 const cars = [
   {
@@ -54,17 +55,34 @@ function App({
   const [selectedProduct,setSelectProduct]=useState(null);
 
   const handleAddUpdateProduct = (e) => {
+    if(!editState){
     setproducts([
       ...products,
       { id: Date(), name: productName, price: pricep },
     ]);
+  }
+  else{
+    setproducts(products.map(p =>{
+      if(p.id===selectedProduct.id){
+        return{
+          ...p,
+          name : productName,
+          price : pricep,
+
+        }
+      }
+      return p;
+    }))
+  }
     setProductName("");
     productp(0);
   };
   const handelRemoveProduct = (id) =>
     setproducts(products.filter((p) => p.id !== id));
+
   const handelLetEditProduct = (product) => {
     setEditState(true);
+    setSelectProduct(product);
     setProductName(product.name);
     productp(product.price);
   };
@@ -100,6 +118,7 @@ function App({
         onChange={(f) => productp(f.target.value)}
       />
       <button onClick={handleAddUpdateProduct}>{editState?"update":"add"}</button>
+     
     </div>
   );
 }

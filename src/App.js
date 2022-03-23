@@ -1,62 +1,73 @@
-import logo from './logo.svg';
-import './App.css';
-import Counter from './Counter';
+import logo from "./logo.svg";
+import "./App.css";
+import Counter from "./Counter";
 import React, { useState } from "react";
 
 const cars = [
   {
-    name: 'BMW',
+    name: "BMW",
     price: 400,
   },
   {
-    name: 'Bentley',
+    name: "Bentley",
     price: 300,
   },
   {
-    name: 'Tesla',
+    name: "Tesla",
     price: 300,
   },
   {
-    name: 'Lamborghini',
+    name: "Lamborghini",
     price: 300,
   },
   {
-    name: 'Mercedez',
+    name: "Mercedez",
     price: 300,
   },
   {
-    name: 'Porsche',
+    name: "Porsche",
     price: 300,
   },
   {
-    name: 'Buggatti',
+    name: "Buggatti",
     price: 300,
   },
   {
-    name: 'Ferrari',
+    name: "Ferrari",
     price: 300,
   },
 ];
 
-function App({ name, location, coOrdinates: {latitude, longitude}, age, primes }) {
-  
-  console.log(name, location, 'ccheck props');
+function App({
+  name,
+  location,
+  coOrdinates: { latitude, longitude },
+  age,
+  primes,
+}) {
+  console.log(name, location, "ccheck props");
   // const { name, location, coOrdinates: {latitude, longitude}, age, primes } = props;
- const [productName, setProductName] =useState('car');
- const [pricep,productp] = useState(0);
- const [products,setproducts] =useState([]);
- const handleAddproduct =(e) => 
- {setproducts([
-   ...products,
-    {id: Date(),name: productName ,price: pricep}]);
-  setProductName('');
-  productp(0);
+  const [productName, setProductName] = useState("");
+  const [pricep, productp] = useState(0);
+  const [products, setproducts] = useState([]);
+  const [editState,setEditState] = useState(false);
+  const [selectedProduct,setSelectProduct]=useState(null);
+
+  const handleAddUpdateProduct = (e) => {
+    setproducts([
+      ...products,
+      { id: Date(), name: productName, price: pricep },
+    ]);
+    setProductName("");
+    productp(0);
   };
-    const handelRemoveProduct =(id) => setproducts(products.filter((p) =>p.id !== id))
-    const handelLetEditProduct = (product) =>{
-      setProductName(product.name);
-      productp(product.price);
-    };
+  const handelRemoveProduct = (id) =>
+    setproducts(products.filter((p) => p.id !== id));
+  const handelLetEditProduct = (product) => {
+    setEditState(true);
+    setProductName(product.name);
+    productp(product.price);
+  };
   return (
     <div className="App">
       <h1>{name}</h1>
@@ -64,31 +75,32 @@ function App({ name, location, coOrdinates: {latitude, longitude}, age, primes }
       <h1>{latitude}' North</h1>
       <h1>{longitude}'East</h1>
       <h1>{age} years</h1>
-      <h2>Primes: {primes}  {primes.length} primes</h2>
+      <h2>
+        Primes: {primes} {primes.length} primes
+      </h2>
       <Counter />
       <h1>Cars</h1>
       <ol>
-      {products.map(car => (
-        <li key ={car.id}>
-          <span>{car.name}</span>
-          <span>{car.price}</span>
-          <button onClick={(e) =>handelRemoveProduct(car.id)}>X</button>
-          <button onClick={(f) =>handelLetEditProduct(car)}>Edit</button>
+        {products.map((car) => (
+          <li key={car.id}>
+            <span>{car.name}</span>
+            <span>{car.price}</span>
+            <button onClick={(f) => handelLetEditProduct(car)}>Edit</button>
+            <button onClick={(e) => handelRemoveProduct(car.id)}>X</button>
           </li>
-      ))}
+        ))}
       </ol>
-      <input value={(productName)}
-      onChange={e => setProductName(e.target.value)}/>
-      <input  type="number"
-      value ={pricep}
-      onChange={f => productp(f.target.value)}
+      <input
+        value={productName}
+        onChange={(e) => setProductName(e.target.value)}
       />
-      <button  onClick={handleAddproduct}>
-      add
-      </button>
-     </div>
-   
+      <input
+        type="number"
+        value={pricep}
+        onChange={(f) => productp(f.target.value)}
+      />
+      <button onClick={handleAddUpdateProduct}>{editState?"update":"add"}</button>
+    </div>
   );
 }
-
 export default App;

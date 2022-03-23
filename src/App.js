@@ -118,6 +118,7 @@ function App({
         onChange={(f) => productp(f.target.value)}
       />
       <button onClick={handleAddUpdateProduct}>{editState?"update":"add"}</button>
+      <button onClick={e => setEditState(false)}>cancel</button>
      
     </div>
   );

@@ -3,6 +3,7 @@ import "./App.css";
 import Counter from "./Counter";
 import React, { useState } from "react";
 import { isElementOfType } from "react-dom/test-utils";
+import { useEffect } from "react";
 
 const cars = [
   {
@@ -53,6 +54,14 @@ function App({
   const [products, setproducts] = useState([]);
   const [editState,setEditState] = useState(false);
   const [selectedProduct,setSelectProduct]=useState(null);
+
+  useEffect(() => {
+    console.log('changed!!!')
+    if(!editState) {
+      setProductName('');
+      productp(0);
+    }
+  },[editState]);
 
   const handleAddUpdateProduct = (e) => {
     if(!editState){
@@ -119,7 +128,6 @@ function App({
       />
       <button onClick={handleAddUpdateProduct}>{editState?"update":"add"}</button>
      {editState? <button onClick={e => setEditState(false)}>cancel</button>:null}
-     
     </div>
   );
 }

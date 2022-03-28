@@ -73,7 +73,12 @@ function App({
       ...products,
       { id: Date(), name: productName, price: pricep },
     ]);
+    localStorage.setItem('products',JSON.stringify([
+      ...products,
+      { id: Date(), name: productName, price: pricep },
+    ]))
   }
+
   else{
     setproducts(products.map(p =>{
       if(p.id===selectedProduct.id){
@@ -86,13 +91,27 @@ function App({
       }
       return p;
     }))
+    localStorage.setItem('products',JSON.stringify(products.map(p =>{
+      if(p.id===selectedProduct.id){
+        return{
+          ...p,
+          name : productName,
+          price : pricep,
+
+        }
+      }
+      return p;
+    })))
     setEditState(false);
   }
     setProductName("");
     productp(0);
   };
   const handelRemoveProduct = (id) =>
+  {
     setproducts(products.filter((p) => p.id !== id));
+    localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
+  } 
 
   const handelLetEditProduct = (product) => {
     setEditState(true);
@@ -114,6 +133,12 @@ function App({
 
     }
   }
+  useEffect(() => {
+    const a = localStorage.getItem('products');
+    if(a){
+      setproducts(JSON.parse(a));
+    }
+  },[])
   return (
     <div className="App">
       <h1>{name}</h1>
@@ -156,5 +181,6 @@ function App({
      {editState? <button onClick={e => setEditState(false)}>cancel</button>:null}
     </div>
   );
+
 }
 export default App;

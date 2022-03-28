@@ -3,7 +3,7 @@ import "./App.css";
 import Counter from "./Counter";
 import React, { useState } from "react";
 import { isElementOfType } from "react-dom/test-utils";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import ExpensesList from "./ExpensesList";
 import ExpensesItem from "./ExpensesItem";
 
@@ -56,6 +56,8 @@ function App({
   const [products, setproducts] = useState([]);
   const [editState,setEditState] = useState(false);
   const [selectedProduct,setSelectProduct]=useState(null);
+  const nameInput = useRef(null);
+  const priceInput = useRef (null);
 
   useEffect(() => {
     console.log('changed!!!')
@@ -98,6 +100,20 @@ function App({
     setProductName(product.name);
     productp(product.price);
   };
+
+  const handelPressEnterName = (e) =>{
+    if(e.code==="Enter"){
+    priceInput?.current.focus()
+
+    }
+  }
+  const handelPressEnterPrice =(e) =>{
+    if(e.code==="Enter"){
+      handleAddUpdateProduct();
+      nameInput?.current.focus()
+
+    }
+  }
   return (
     <div className="App">
       <h1>{name}</h1>
@@ -125,11 +141,15 @@ function App({
       <input
         value={productName}
         onChange={(e) => setProductName(e.target.value)}
+       ref ={nameInput}
+       onKeyPress ={handelPressEnterName}
       />
       <input
         type="number"
         value={pricep}
         onChange={(f) => productp(f.target.value)}
+        ref={priceInput}
+        onKeyPress={handelPressEnterPrice}
       />
       </div>
       <button onClick={handleAddUpdateProduct}>{editState?"update":"add"}</button>

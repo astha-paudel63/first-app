@@ -1,5 +1,6 @@
 import logo from "./logo.svg";
 import "./App.css";
+import "./Expenses.css";
 import React, { useState, useRef} from "react";
 import { isElementOfType } from "react-dom/test-utils";
 import { useEffect } from "react";
@@ -40,7 +41,7 @@ function ExpensesList() {
     ]);
     localStorage.setItem('products',JSON.stringify([
       ...products,
-      { id: Date(), name: productName, price: pricep },
+      { id: Date(), name: productName, price: pricep, quantity: quantity },
     ]))
   }
   else{
@@ -62,6 +63,7 @@ function ExpensesList() {
           ...p,
           name : productName,
           price : pricep,
+          quantity: quantity,
 
         }
       }
@@ -85,6 +87,7 @@ function ExpensesList() {
     setProductName(product.name);
     productp(product.price);
    setQuantity(product.quantity);
+   nameInputRef?.current.focus();
   };
   const handelPressEnterName = (e) =>{
     console.log(e);
@@ -123,7 +126,7 @@ function ExpensesList() {
       
       
       <h1>Expenses</h1>
-      <ol>
+      <div className="product-container">
         {products.map((car) => (
           <ExpensesItem
           key={car.id}
@@ -138,12 +141,15 @@ function ExpensesList() {
           //   <button onClick={(e) => handelRemoveProduct(car.id)}>X</button>
           // </li>
         ))}
-      </ol>
-      <div>
-        <span>total</span>
-        <span> {products.reduce((a,v) => a + +v.price, 0)}</span>
       </div>
-      <div className="input">
+      <div className="total-wapper">
+      <div className="total">
+        <span className="total-name">total</span>
+        <span className="total-number">{products.reduce((a,v) => a + +v.price *v.quantity, 0)}</span>
+      </div>
+      </div>
+      < div className="input">
+      < div className="name-wapper">
         <h2>Name</h2>
       <input
         value={productName}
@@ -151,6 +157,8 @@ function ExpensesList() {
         ref ={nameInputRef}
         onKeyPress ={handelPressEnterName}
       />
+      </div>
+      <div className="price-wapper">
       <h2>Price</h2>
       <input
         type="number"
@@ -158,8 +166,9 @@ function ExpensesList() {
         onChange={(f) => productp(f.target.value)}
         ref ={priceInputRef}
         onKeyPress ={handelPressEnterPrice}
-
       />
+      </div>
+      <div className="quantity-wapper">
       <h2>Quantity</h2>  
      <input
        type="number"
@@ -169,6 +178,8 @@ function ExpensesList() {
         onKeyPress ={handelPressEnterquantity}
 
      />
+     </div>
+     <div className="date-wapper">
       <h2>date</h2>
       <input 
       type="Date"
@@ -179,8 +190,13 @@ function ExpensesList() {
 
         />
       </div>
+      </div>
+      <div className="add">
       <button onClick={handleAddUpdateProduct}>{editState?"update":"add"}</button>
+      </div>
+      <div className="cancel">
      {editState? <button onClick={e => setEditState(false)}>cancel</button>:null}
+     </div>
     </div>
   );
 }

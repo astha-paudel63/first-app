@@ -1,4 +1,8 @@
 import logo from "./logo.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { cssTransition } from 'react-toastify';
+
 import "./App.css";
 import Counter from "./Counter";
 import React, { useState } from "react";
@@ -6,6 +10,8 @@ import { isElementOfType } from "react-dom/test-utils";
 import { useEffect, useRef } from "react";
 import ExpensesList from "./ExpensesList";
 import ExpensesItem from "./ExpensesItem";
+import { MdOutlineDeleteSweep } from "react-icons/md";
+import { AiFillCar } from "react-icons/ai";
 
 const cars = [
   {
@@ -42,6 +48,8 @@ const cars = [
   },
 ];
 
+
+
 function App({
   name,
   location,
@@ -54,64 +62,80 @@ function App({
   const [productName, setProductName] = useState("");
   const [pricep, productp] = useState(0);
   const [products, setproducts] = useState([]);
-  const [editState,setEditState] = useState(false);
-  const [selectedProduct,setSelectProduct]=useState(null);
+  const [editState, setEditState] = useState(false);
+  const [selectedProduct, setSelectProduct] = useState(null);
   const nameInput = useRef(null);
-  const priceInput = useRef (null);
+  const priceInput = useRef(null);
+  const Zoom = cssTransition({
+    enter: 'zoomIn',
+    exit: 'zoomOut',
+    appendPosition: false,
+    collapse: true,
+    collapseDuration: 300
+  });
 
   useEffect(() => {
-    console.log('changed!!!')
-    if(!editState) {
-      setProductName('');
+    console.log("changed!!!");
+    if (!editState) {
+      setProductName("");
       productp(0);
     }
-  },[editState]);
+  }, [editState]);
 
   const handleAddUpdateProduct = (e) => {
-    if(!editState){
-    setproducts([
-      ...products,
-      { id: Date(), name: productName, price: pricep },
-    ]);
-    localStorage.setItem('products',JSON.stringify([
-      ...products,
-      { id: Date(), name: productName, price: pricep },
-    ]))
-  }
-
-  else{
-    setproducts(products.map(p =>{
-      if(p.id===selectedProduct.id){
-        return{
-          ...p,
-          name : productName,
-          price : pricep,
-
-        }
-      }
-      return p;
-    }))
-    localStorage.setItem('products',JSON.stringify(products.map(p =>{
-      if(p.id===selectedProduct.id){
-        return{
-          ...p,
-          name : productName,
-          price : pricep,
-
-        }
-      }
-      return p;
-    })))
-    setEditState(false);
-  }
+    if (!editState) {
+      setproducts([
+        ...products,
+        { id: Date(), name: productName, price: pricep },
+      ]);
+      localStorage.setItem(
+        "products",
+        JSON.stringify([
+          ...products,
+          { id: Date(), name: productName, price: pricep },
+        ])
+      );
+      toast("product "+ productName+" created "+ " priced RS. "+pricep);
+    } else {
+      setproducts(
+        products.map((p) => {
+          if (p.id === selectedProduct.id) {
+            return {
+              ...p,
+              name: productName,
+              price: pricep,
+            };
+          }
+          return p;
+        })
+      );
+      localStorage.setItem(
+        "products",
+        JSON.stringify(
+          products.map((p) => {
+            if (p.id === selectedProduct.id) {
+              return {
+                ...p,
+                name: productName,
+                price: pricep,
+              };
+            }
+            return p;
+          })
+        )
+      );
+      toast("product Updated");
+      setEditState(false);
+    }
     setProductName("");
     productp(0);
   };
-  const handelRemoveProduct = (id) =>
-  {
+  const handelRemoveProduct = (id) => {
+    console.log(id, "e");
     setproducts(products.filter((p) => p.id !== id));
-    localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
-  } 
+    // localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
+      toast("product "+ productName+" removed"+ " priced RS. "+pricep);
+  };
 
   const handelLetEditProduct = (product) => {
     setEditState(true);
@@ -120,25 +144,23 @@ function App({
     productp(product.price);
   };
 
-  const handelPressEnterName = (e) =>{
-    if(e.code==="Enter"){
-    priceInput?.current.focus()
-
+  const handelPressEnterName = (e) => {
+    if (e.code === "Enter") {
+      priceInput?.current.focus();
     }
-  }
-  const handelPressEnterPrice =(e) =>{
-    if(e.code==="Enter"){
+  };
+  const handelPressEnterPrice = (e) => {
+    if (e.code === "Enter") {
       handleAddUpdateProduct();
-      nameInput?.current.focus()
-
+      nameInput?.current.focus();
     }
-  }
+  };
   useEffect(() => {
-    const a = localStorage.getItem('products');
-    if(a){
+    const a = localStorage.getItem("products");
+    if (a) {
       setproducts(JSON.parse(a));
     }
-  },[])
+  }, []);
   return (
     <div className="App">
       <h1>{name}</h1>
@@ -150,37 +172,51 @@ function App({
         Primes: {primes} {primes.length} primes
       </h2>
       <Counter />
-      <ExpensesList/>
+      <ExpensesList />
       <h1>Cars</h1>
+      <AiFillCar color={"#fffff"} size={100} />
       <ol>
         {products.map((car) => (
           <li key={car.id}>
             <span>{car.name}</span>
             <span>{car.price}</span>
             <button onClick={(f) => handelLetEditProduct(car)}>Edit</button>
-            <button onClick={(e) => handelRemoveProduct(car.id)}>X</button>
+            <button onClick={(e) => handelRemoveProduct(car.id)}>
+              <MdOutlineDeleteSweep color={"#fffff"} size={20} />
+            </button>
           </li>
         ))}
       </ol>
       <div className="input">
-      <input
-        value={productName}
-        onChange={(e) => setProductName(e.target.value)}
-       ref ={nameInput}
-       onKeyPress ={handelPressEnterName}
-      />
-      <input
-        type="number"
-        value={pricep}
-        onChange={(f) => productp(f.target.value)}
-        ref={priceInput}
-        onKeyPress={handelPressEnterPrice}
-      />
+        <input
+          value={productName}
+          onChange={(e) => setProductName(e.target.value)}
+          ref={nameInput}
+          onKeyPress={handelPressEnterName}
+        />
+        <input
+          type="number"
+          value={pricep}
+          onChange={(f) => productp(f.target.value)}
+          ref={priceInput}
+          onKeyPress={handelPressEnterPrice}
+        />
       </div>
-      <button onClick={handleAddUpdateProduct}>{editState?"update":"add"}</button>
-     {editState? <button onClick={e => setEditState(false)}>cancel</button>:null}
+      <button onClick={handleAddUpdateProduct}>
+        {editState ? "update" : "add"}
+      </button>
+      {editState ? (
+        <button onClick={(e) => setEditState(false)}>cancel</button>
+      ) : null}
+      <ToastContainer
+        draggable
+        pauseOnHover
+        position="bottom-right"
+        newestOnTop
+        autoClose={9000}
+        // transition={Zoom}
+      />
     </div>
   );
-
 }
 export default App;

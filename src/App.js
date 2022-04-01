@@ -12,6 +12,7 @@ import ExpensesList from "./ExpensesList";
 import ExpensesItem from "./ExpensesItem";
 import { MdOutlineDeleteSweep } from "react-icons/md";
 import { AiFillCar } from "react-icons/ai";
+import Modal from 'react-modal';
 
 const cars = [
   {
@@ -66,6 +67,7 @@ function App({
   const [selectedProduct, setSelectProduct] = useState(null);
   const nameInput = useRef(null);
   const priceInput = useRef(null);
+  const [openmodal,setOpenmodal] =useState(false);
   const Zoom = cssTransition({
     enter: 'zoomIn',
     exit: 'zoomOut',
@@ -135,8 +137,13 @@ function App({
     setproducts(products.filter((p) => p.id !== id));
     // localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
       toast("product "+ productName+" removed"+ " priced RS. "+pricep);
+      setOpenmodal(false)
+      setSelectProduct(null)
   };
-
+ const handleClickRemove = (pr) =>{
+  setOpenmodal(true);//modal lai open garayko
+  setSelectProduct(pr);//product lai select garayko
+ };
   const handelLetEditProduct = (product) => {
     setEditState(true);
     setSelectProduct(product);
@@ -181,7 +188,7 @@ function App({
             <span>{car.name}</span>
             <span>{car.price}</span>
             <button onClick={(f) => handelLetEditProduct(car)}>Edit</button>
-            <button onClick={(e) => handelRemoveProduct(car.id)}>
+            <button onClick={(e) =>handleClickRemove(car)}>
               <MdOutlineDeleteSweep color={"#fffff"} size={20} />
             </button>
           </li>
@@ -216,6 +223,16 @@ function App({
         autoClose={9000}
         // transition={Zoom}
       />
+      <Modal isOpen={openmodal}
+      shouldCloseOnEsc>
+        <div>
+          <span>Do you want to delete?</span>
+          <button onClick={(e) =>setOpenmodal(false)}>X</button>
+          <button 
+           onClick={(e) => handelRemoveProduct(selectedProduct.id)}
+          >yes</button>
+        </div>
+      </Modal>
     </div>
   );
 }

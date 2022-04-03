@@ -8,6 +8,7 @@ import ExpensesItem from "./ExpensesItem";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { cssTransition } from 'react-toastify';
+import Modal from 'react-modal';
 
 
 function ExpensesList() {
@@ -24,7 +25,7 @@ function ExpensesList() {
   const priceInputRef = useRef(null);
   const quantityInputRef = useRef(null);
   const [value, setValue] = useState(0);
-  const [multiply,setMultiply] =useState(0);
+  const [openmodal,setOpenmodal] =useState(false);
  
   const dateInputRef = useRef(null);
   useEffect(() => {
@@ -83,10 +84,17 @@ function ExpensesList() {
   };
   const handelRemoveProduct = (id) =>
   {
+    console.log(id, "e");
     setproducts(products.filter((p) => p.id !== id));
     // localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
     toast.warning("product REMOVE ");
+    setOpenmodal(false);
+    setSelectProduct(null)//setselectproduct lai empty garayko cuz edit ma ni use vako xa
   } 
+  const handleClickRemove = (pr) =>{
+    setOpenmodal(true);//modal lai open garayko
+    setSelectProduct(pr);//product lai select garayko
+   };//delete garxa aba 
 
   const handelLetEditProduct = (product) => {
     setEditState(true);
@@ -140,7 +148,7 @@ function ExpensesList() {
           key={car.id}
           expenses ={car}
           handelLetEditProduct={handelLetEditProduct}
-          handelRemoveProduct={handelRemoveProduct} />
+          handleClickRemove={handleClickRemove} />
           // <li key={car.id}>
           //   <span>{moment(car.date).format("MMMM/DD/YYYY")}</span>
           //   <span>{car.name}</span>
@@ -213,6 +221,16 @@ function ExpensesList() {
         autoClose={9000}
         transition={Slide}
       />
+      <Modal isOpen={openmodal}
+      shouldCloseOnEsc>
+        <div>
+          <span>Do you want to delete?</span>
+          <button onClick={(e) =>setOpenmodal(false)}>X</button>
+          <button 
+           onClick={(e) => handelRemoveProduct(selectedProduct.id)}
+          >yes</button>
+        </div>
+      </Modal>
       </div>
     
     

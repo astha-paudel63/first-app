@@ -135,7 +135,7 @@ function App({
     console.log(id, "e");
     setproducts(products.filter((p) => p.id !== id));
     // localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
-      toast("product "+ productName+" removed"+ " priced RS. "+pricep);
+      toast("product "+ productName+" removed"+ " priced RS. "+ pricep);
       setOpenmodal(false)
       setSelectProduct(null)
   };

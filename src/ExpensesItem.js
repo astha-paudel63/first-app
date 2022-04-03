@@ -5,9 +5,10 @@ import { MdOutlineDeleteSweep } from 'react-icons/md';
 import { MdEditNote } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
 
 
-const ExpensesItem = ({expenses,handelLetEditProduct,handelRemoveProduct}) => {
+const ExpensesItem = ({expenses,handelLetEditProduct,handleClickRemove}) => {
     return(
         <div className="products" key={expenses.id}>
         <div className="date">
@@ -29,7 +30,7 @@ const ExpensesItem = ({expenses,handelLetEditProduct,handelRemoveProduct}) => {
         </div>
         <div className="remove">
           <tooltip title="DELETE">
-            <button onClick={(e) => handelRemoveProduct(expenses.id)}><MdOutlineDeleteSweep color={'#fffff'} size={20}/></button>
+            <button onClick={(e) => handleClickRemove(expenses.id)}><MdOutlineDeleteSweep color={'#fffff'} size={20}/></button>
           </tooltip>
         </div>
       </div>

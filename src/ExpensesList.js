@@ -5,6 +5,9 @@ import React, { useState, useRef} from "react";
 import { isElementOfType } from "react-dom/test-utils";
 import { useEffect } from "react";
 import ExpensesItem from "./ExpensesItem";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { cssTransition } from 'react-toastify';
 
 
 function ExpensesList() {
@@ -43,6 +46,7 @@ function ExpensesList() {
       ...products,
       { id: Date(), name: productName, price: pricep, quantity: quantity },
     ]))
+    toast("product "+ productName+" created "+ " priced RS. "+pricep);
   }
   else{
     setproducts(products.map(p =>{
@@ -78,7 +82,8 @@ function ExpensesList() {
   const handelRemoveProduct = (id) =>
   {
     setproducts(products.filter((p) => p.id !== id));
-    localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
+    // localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
+    toast("product REMOVE ");
   } 
 
   const handelLetEditProduct = (product) => {
@@ -88,6 +93,7 @@ function ExpensesList() {
     productp(product.price);
    setQuantity(product.quantity);
    nameInputRef?.current.focus();
+   toast("Product Update");
   };
   const handelPressEnterName = (e) =>{
     console.log(e);
@@ -197,7 +203,17 @@ function ExpensesList() {
       <div className="cancel">
      {editState? <button onClick={e => setEditState(false)}>cancel</button>:null}
      </div>
-    </div>
+     <ToastContainer
+        draggable
+        pauseOnHover
+        position="bottom-right"
+        newestOnTop
+        autoClose={9000}
+        // transition={Zoom}
+      />
+      </div>
+    
+    
   );
 }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import "./Expenses.css";
+import "./modal.css";
 import { MdOutlineDeleteSweep } from 'react-icons/md';
 import { MdEditNote } from 'react-icons/md';
 import { ToastContainer, toast } from 'react-toastify';

@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { cssTransition } from 'react-toastify';
-
+import "./modal.css";
 import "./App.css";
 import Counter from "./Counter";
 import React, { useState } from "react";
@@ -12,7 +12,8 @@ import ExpensesList from "./ExpensesList";
 import { MdOutlineDeleteSweep } from "react-icons/md";
 import { AiFillCar } from "react-icons/ai";
 import Modal from 'react-modal';
-
+  
+Modal.setAppElement('#root')
 const cars = [
   {
     name: "BMW",

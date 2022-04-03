@@ -1,5 +1,5 @@
 import logo from "./logo.svg";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { cssTransition } from 'react-toastify';
 
@@ -9,7 +9,6 @@ import React, { useState } from "react";
 import { isElementOfType } from "react-dom/test-utils";
 import { useEffect, useRef } from "react";
 import ExpensesList from "./ExpensesList";
-import ExpensesItem from "./ExpensesItem";
 import { MdOutlineDeleteSweep } from "react-icons/md";
 import { AiFillCar } from "react-icons/ai";
 import Modal from 'react-modal';
@@ -221,7 +220,7 @@ function App({
         position="bottom-right"
         newestOnTop
         autoClose={9000}
-        // transition={Zoom}
+        transition={Slide}
       />
       <Modal isOpen={openmodal}
       shouldCloseOnEsc>

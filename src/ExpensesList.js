@@ -5,7 +5,7 @@ import React, { useState, useRef} from "react";
 import { isElementOfType } from "react-dom/test-utils";
 import { useEffect } from "react";
 import ExpensesItem from "./ExpensesItem";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { cssTransition } from 'react-toastify';
 
@@ -46,7 +46,7 @@ function ExpensesList() {
       ...products,
       { id: Date(), name: productName, price: pricep, quantity: quantity },
     ]))
-    toast("product "+ productName+" created "+ " priced RS. "+pricep);
+    toast.success("product "+ productName+" created "+ " priced RS. "+pricep);
   }
   else{
     setproducts(products.map(p =>{
@@ -74,7 +74,7 @@ function ExpensesList() {
       }
       return p;
     })))
-    toast("Product Update");
+    toast.success("Product Update");
     setEditState(false);
   }
     setProductName("");
@@ -85,7 +85,7 @@ function ExpensesList() {
   {
     setproducts(products.filter((p) => p.id !== id));
     // localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
-    toast("product REMOVE ");
+    toast.warning("product REMOVE ");
   } 
 
   const handelLetEditProduct = (product) => {
@@ -211,7 +211,7 @@ function ExpensesList() {
         position="bottom-right"
         newestOnTop
         autoClose={9000}
-        // transition={Zoom}
+        transition={Slide}
       />
       </div>
     

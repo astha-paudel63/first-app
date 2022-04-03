@@ -60,6 +60,7 @@ function ExpensesList() {
         }
       }
       return p;
+      
     }))
     localStorage.setItem('products',JSON.stringify(products.map(p =>{
       if(p.id===selectedProduct.id){
@@ -73,6 +74,7 @@ function ExpensesList() {
       }
       return p;
     })))
+    toast("Product Update");
     setEditState(false);
   }
     setProductName("");
@@ -93,7 +95,7 @@ function ExpensesList() {
     productp(product.price);
    setQuantity(product.quantity);
    nameInputRef?.current.focus();
-   toast("Product Update");
+  
   };
   const handelPressEnterName = (e) =>{
     console.log(e);

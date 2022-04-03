@@ -97,7 +97,7 @@ function App({
           { id: Date(), name: productName, price: pricep },
         ])
       );
-      toast("product "+ productName+" created "+ " priced RS. "+pricep);
+      toast.success("product "+ productName+" created "+ " priced RS. "+pricep);
     } else {
       setproducts(
         products.map((p) => {
@@ -126,7 +126,7 @@ function App({
           })
         )
       );
-      toast("product Updated");
+      toast.success("product Updated");
       setEditState(false);
     }
     setProductName("");

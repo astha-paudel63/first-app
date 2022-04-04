@@ -9,6 +9,11 @@
   width: 100%;
 }
 
+.selected-btn {
+  background-color: #000000;
+  color: #ffffff;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

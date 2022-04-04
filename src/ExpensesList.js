@@ -10,13 +10,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { cssTransition } from "react-toastify";
 import Modal from "react-modal";
 import moment from "moment";
+
 Modal.setAppElement("#root");
 
 function ExpensesList() {
   // const { name, location, coOrdinates: {latitude, longitude}, age, primes } = props;
   const [productName, setProductName] = useState("");
   const [pricep, productp] = useState(0);
-  const [products, setproducts] = useState([]);
+  const [expenses, setExpenses] = useState([]);
   const [dates, setDates] = useState(new Date());
   const [quantity, setQuantity] = useState(0);
   const [editState, setEditState] = useState(false);
@@ -40,14 +41,14 @@ function ExpensesList() {
 
   const handleAddUpdateProduct = (e) => {
     if (!editState) {
-      setproducts([
-        ...products,
+      setExpenses([
+        ...expenses,
         { id: Date(), name: productName, price: pricep, quantity: quantity },
       ]);
       localStorage.setItem(
-        "products",
+        "expenses",
         JSON.stringify([
-          ...products,
+          ...expenses,
           { id: Date(), name: productName, price: pricep, quantity: quantity },
         ])
       );
@@ -55,8 +56,8 @@ function ExpensesList() {
         "product " + productName + " created " + " priced RS. " + pricep
       );
     } else {
-      setproducts(
-        products.map((p) => {
+      setExpenses(
+        expenses.map((p) => {
           if (p.id === selectedProduct.id) {
             return {
               ...p,
@@ -69,9 +70,9 @@ function ExpensesList() {
         })
       );
       localStorage.setItem(
-        "products",
+        "expenses",
         JSON.stringify(
-          products.map((p) => {
+          expenses.map((p) => {
             if (p.id === selectedProduct.id) {
               return {
                 ...p,
@@ -93,8 +94,8 @@ function ExpensesList() {
   };
   const handelRemoveProduct = (id) => {
     console.log(id, "e");
-    setproducts(products.filter((p) => p.id !== id));
-    //localStorage.setItem('products',JSON.stringify(products.fliter((p) => p.id !== id )))
+    setExpenses(expenses.filter((p) => p.id !== id));
+    localStorage.setItem('expenses',JSON.stringify(expenses.filter((p) => p.id !== id )))
     setOpenmodal(false);
     setSelectProduct(null); //setselectproduct lai empty garayko cuz edit ma ni use vako xa
     toast.success("product REMOVE ");
@@ -135,16 +136,16 @@ function ExpensesList() {
     }
   };
   useEffect(() => {
-    const a = localStorage.getItem("products");
+    const a = localStorage.getItem("expenses");
     if (a) {
-      setproducts(JSON.parse(a));
+      setExpenses(JSON.parse(a));
     }
   }, []);
   return (
     <div className="App">
       <h1>Expenses</h1>
       <div className="product-container">
-        {products.map((car) => (
+        {expenses.map((car) => (
           <ExpensesItem
             key={car.id}
             expenses={car}
@@ -164,7 +165,7 @@ function ExpensesList() {
         <div className="total">
           <span className="total-name">total</span>
           <span className="total-number">
-            {products.reduce((a, v) => a + +v.price * v.quantity, 0)}
+            {expenses.reduce((a, v) => a + +v.price * v.quantity, 0)}
           </span>
         </div>
       </div>

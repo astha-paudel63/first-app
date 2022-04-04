@@ -7,14 +7,6 @@ import reportWebVitals from './reportWebVitals';
 ReactDOM.render(
   <React.StrictMode>
     <App 
-    name="React"
-    age={20}
-    location={"Lalitpur"}
-    coOrdinates={{
-      longitude: 80,
-      latitude: 27,
-    }}
-    primes={[2, 3, 5, 7, 11, 13]}
     />
   </React.StrictMode>,
   document.getElementById('root')

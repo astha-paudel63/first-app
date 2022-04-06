@@ -10,7 +10,7 @@
 }
 
 .selected-btn {
-  background-color: #000000;
+  background-color: #4CAF50;
   color: #ffffff;
 }
 
@@ -51,4 +51,26 @@
 
 li span {
   margin: 5px 10px;
+}
+button{
+  padding: 14px 40px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 12px;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+  transition-duration: 0.4s;
+ float:left;
+}
+.button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+.welcome h1 {
+float:right;
 }

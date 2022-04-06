@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { cssTransition } from "react-toastify";
-import "./modal.css";
+// import "./modal.css";
 import "./App.css";
 import Counter from "./Counter";
 import React, { useState } from "react";
@@ -20,45 +20,62 @@ function App() {
 
   return (
     <>
-      <button
-        className={selected === "expenses" ? "selected-btn" : ""}
-        onClick={(e) => setSelected("expenses")}
-      >
-        Expenses
-      </button>
-      <button
-        className={selected === "basic" ? "selected-btn" : ""}
-        onClick={(e) => setSelected("basic")}
-      >
-        Basic
-      </button>
-      <button
-        className={selected === "billing" ? "selected-btn" : ""}
-        onClick={(e) => setSelected("billing")}
-      >
-        Billing List
-      </button>
-      <button
-        className={selected === "" ? "selected-btn" : ""}
-        onClick={(e) => setSelected("")}
-      >
-        Nothing
-      </button>
-      {/* <p>{selected}</p> */}
-      {selected === "basic" && (
-        <BasicList
-          name="React"
-          age={20}
-          location={"Lalitpur"}
-          coOrdinates={{
-            longitude: 80,
-            latitude: 27,
-          }}
-          primes={[2, 3, 5, 7, 11, 13]}
-        />
-      )}
-      {selected === "expenses" && <ExpensesList />}
-      {selected === "billing" && <BillingList/>}
+      <div className="header-wapper">
+        <div className="header">
+          <div className="Expenese">
+            <button
+              className={selected === "expenses" ? "selected-btn" : ""}
+              onClick={(e) => setSelected("expenses")}
+            >
+              Expenses
+            </button>
+          </div>
+          <div className="basic">
+
+          <button
+            className={selected === "basic" ? "selected-btn" : ""}
+            onClick={(e) => setSelected("basic")}
+            >
+            Basic
+          </button>
+          </div>
+          <div className="billing">
+            <button
+            className={selected === "billing" ? "selected-btn" : ""}
+            onClick={(e) => setSelected("billing")}
+            >
+            Billing List
+            </button>
+          </div>
+          <div className="nothing">
+
+          <button
+            className={selected === "" ? "selected-btn" : ""}
+            onClick={(e) => setSelected("")}
+            >
+            Nothing
+          </button>
+          </div>
+          <div className="welcome">
+            <h1>welcome to my first app</h1>
+          </div>
+          {/* <p>{selected}</p> */}
+          {selected === "basic" && (
+            <BasicList
+              name="React"
+              age={20}
+              location={"Lalitpur"}
+              coOrdinates={{
+                longitude: 80,
+                latitude: 27,
+              }}
+              primes={[2, 3, 5, 7, 11, 13]}
+            />
+          )}
+          {selected === "expenses" && <ExpensesList />}
+          {selected === "billing" && <BillingList />}
+        </div>
+      </div>
     </>
   );
 }

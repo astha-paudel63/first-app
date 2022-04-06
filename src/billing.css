@@ -1,0 +1,23 @@
+
+.entries{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0px 15px 230px;
+}
+.bill{
+    text-align: center;
+
+}
+.body-wapper{
+    text-align: center;
+    background-color: rgb(199, 209, 197);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0;
+    width: 100%;
+}
+.entries-container{
+   width:100%;
+}

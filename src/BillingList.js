@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactSelect from "react-select";
 import "./billing.css"; 
 
 const BillingList = () => {
@@ -39,55 +40,69 @@ const BillingList = () => {
           <h1>BILL SYSTEM</h1>
         </div>
         <div className="entries-wapper">
-          {entries.map((en) => (
-            <div className="entries">
+        <div className="entries">
               <div className="productName">
                 <h3>Product Name</h3>
-                <span>{en.productName}</span>
               </div>
               <div className="quantity">
                 <h3>Quantity</h3>
-                <span>{+en.quantity}</span>
               </div>
               <div className="price">
                 <h3>Price</h3>
+              </div>
+              <div className="totall">
+              <h3>total</h3>
+              </div>
+            </div>
+          {entries.map((en) => (
+            <div className="entries">
+              <div className="productName">
+                <span>{en.productName}</span>
+              </div>
+              <div className="quantity">
+                <span>{+en.quantity}</span>
+              </div>
+              <div className="price">
                 <span>{+en.price}</span>
               </div>
-              {/* <div className="totall">
+              <div className="totall">
                 <span>{+en.price * +en.quantity}</span>
-              </div> */}
+              </div>
             </div>
           ))}
         </div>
+        
+      </div>
+      <div className="summary">
         <div className="subtotal">
-          <p>
+          
             <span>subTotal</span>
             <span>
               {entries.reduce((a, v) => a + +v.price * +v.quantity, 0)}
             </span>
-          </p>
+          
         </div>
         <div className="discount">
-          <p>
+          
             <span>Discount amount</span>
             <span>
               {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
                 discountRate) /
                 100}
             </span>
-          </p>
+          
         </div>
         <div className="Total">
-          <p>
+          
             <span>Total</span>
             <span>
               {entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
-                (1 - discountRate / 100)}
+                (1 - discountRate / 100).toFixed(2)}
             </span>
-          </p>
+          
         </div>
         <div className="vat">
-          <p>
+          
             <span>vat amount</span>
             <span>
               {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
@@ -95,30 +110,39 @@ const BillingList = () => {
                 vatRate) /
                 100}
             </span>
-          </p>
+          
         </div>
         <div className="grand">
-          <p>
+          
             <span>Grand Total</span>
             <span>
-              {entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
+              {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
                 (1 - discountRate / 100) *
-                (1 + vatRate / 100)}
+                (1 + vatRate / 100)).toFixed(2)}
             </span>
-          </p>
+          
         </div>
-      
-      </div>
+        </div>
                 
       <div className="type">
         <div className="select">
-          <select value={product} onChange={(e) => setProduct(e.target.value)}>
+          {/* <select value={product} onChange={(e) => setProduct(e.target.value)}>
             {products.map((p) => (
               <option id={p.name} key={p.id} value={p.id}>
                 {p.name}
               </option>
             ))}
-          </select>
+          </select> */}
+          <ReactSelect options={products.map(p => ({
+            ...p,
+            value: p.id,
+            label: p.name,
+          }))} 
+          onChange={a => setProduct(a.id)}
+          // value={product}
+          onKeyDown={a => console.log(a)}
+          placeholder="Select Product"
+          />
         </div>
         <div className="quantity">
           <input

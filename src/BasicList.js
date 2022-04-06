@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { cssTransition } from 'react-toastify';
+import { cssTransition } from "react-toastify";
 import "./modal.css";
 import "./App.css";
 import Counter from "./Counter";
@@ -11,9 +11,9 @@ import { useEffect, useRef } from "react";
 import ExpensesList from "./ExpensesList";
 import { MdOutlineDeleteSweep } from "react-icons/md";
 import { AiFillCar } from "react-icons/ai";
-import Modal from 'react-modal';
-  
-Modal.setAppElement('#root')
+import Modal from "react-modal";
+
+Modal.setAppElement("#root");
 const cars = [
   {
     name: "BMW",
@@ -49,8 +49,6 @@ const cars = [
   },
 ];
 
-
-
 function BasicList({
   name,
   location,
@@ -67,13 +65,13 @@ function BasicList({
   const [selectedProduct, setSelectProduct] = useState(null);
   const nameInput = useRef(null);
   const priceInput = useRef(null);
-  const [openmodal,setOpenmodal] =useState(false);
+  const [openmodal, setOpenmodal] = useState(false);
   const Zoom = cssTransition({
-    enter: 'zoomIn',
-    exit: 'zoomOut',
+    enter: "zoomIn",
+    exit: "zoomOut",
     appendPosition: false,
     collapse: true,
-    collapseDuration: 300
+    collapseDuration: 300,
   });
 
   useEffect(() => {
@@ -97,7 +95,9 @@ function BasicList({
           { id: Date(), name: productName, price: pricep },
         ])
       );
-      toast.success("product "+ productName+" created "+ " priced RS. "+pricep);
+      toast.success(
+        "product " + productName + " created " + " priced RS. " + pricep
+      );
     } else {
       setproducts(
         products.map((p) => {
@@ -135,15 +135,18 @@ function BasicList({
   const handelRemoveProduct = (id) => {
     console.log(id, "e");
     setproducts(products.filter((p) => p.id !== id));
-     localStorage.setItem('products',JSON.stringify(products.filter((p) => p.id !== id )))
-      toast("product "+ productName+" removed"+ " priced RS. "+ pricep);
-      setOpenmodal(false)
-      setSelectProduct(null)
+    localStorage.setItem(
+      "products",
+      JSON.stringify(products.filter((p) => p.id !== id))
+    );
+    toast("product " + productName + " removed" + " priced RS. " + pricep);
+    setOpenmodal(false);
+    setSelectProduct(null);
   };
- const handleClickRemove = (pr) =>{
-  setOpenmodal(true);//modal lai open garayko
-  setSelectProduct(pr);//product lai select garayko
- };
+  const handleClickRemove = (pr) => {
+    setOpenmodal(true); //modal lai open garayko
+    setSelectProduct(pr); //product lai select garayko
+  };
   const handelLetEditProduct = (product) => {
     setEditState(true);
     setSelectProduct(product);
@@ -188,7 +191,7 @@ function BasicList({
             <span>{car.name}</span>
             <span>{car.price}</span>
             <button onClick={(f) => handelLetEditProduct(car)}>Edit</button>
-            <button onClick={(e) =>handleClickRemove(car)}>
+            <button onClick={(e) => handleClickRemove(car)}>
               <MdOutlineDeleteSweep color={"#fffff"} size={20} />
             </button>
           </li>
@@ -223,14 +226,13 @@ function BasicList({
         autoClose={9000}
         transition={Slide}
       />
-      <Modal isOpen={openmodal}
-      shouldCloseOnEsc>
+      <Modal isOpen={openmodal} shouldCloseOnEsc>
         <div>
           <span>Do you want to delete?</span>
-          <button onClick={(e) =>setOpenmodal(false)}>X</button>
-          <button 
-           onClick={(e) => handelRemoveProduct(selectedProduct.id)}
-          >yes</button>
+          <button onClick={(e) => setOpenmodal(false)}>X</button>
+          <button onClick={(e) => handelRemoveProduct(selectedProduct.id)}>
+            yes
+          </button>
         </div>
       </Modal>
     </div>

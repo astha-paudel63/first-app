@@ -14,6 +14,10 @@ import { AiFillCar } from "react-icons/ai";
 import Modal from "react-modal";
 import BasicList from "./BasicList";
 import BillingList from "./BillingList";
+import { FaHome } from "react-icons/fa";
+import { RiBillFill } from "react-icons/ri";
+import { RiEmotionNormalLine } from "react-icons/ri";
+import { RiNewspaperLine } from "react-icons/ri";
 
 import { Routes, Route, Link } from "react-router-dom";
 
@@ -22,53 +26,89 @@ function App() {
 
   return (
     <>
+    <div className="navigatin-wapper">
       <div className="welcome">
         <Link to="/">
-        <h1>welcome to my first app</h1>
+          <h1>welcome to my first app</h1>
         </Link>
       </div>
       {/* <h1>Welcome to React Router!</h1> */}
-      <Link to="/home">Home</Link>
-      <Link to="/billing">Billing</Link>
-      <Link to="/basic">Basic</Link>
+      <div className="navigation">
+        <div className="billing">
+          <tooltip title="Billing">
+
+          <Link to="/billing">
+            <span><RiBillFill color={"black"} size={40}/></span>
+            </Link>
+          </tooltip>
+        </div>
+        <div className="basic">
+          <tooltip title="Basic">
+
+          <Link to="/basic">
+            <span><RiEmotionNormalLine color={"black"} size={40} /></span>
+            </Link>
+          </tooltip>
+        </div>
+
+        <div className="expenses">
+        <tooltip title="Expenses">
+          <Link to="/expenses">
+            <span><RiNewspaperLine color={"black"} size={40}/></span>
+              </Link>
+        </tooltip>
+        </div>
+        <div className="home">
+          <tooltip title="Home">
+
+          <Link to="/home">
+            <span>
+              <FaHome color={"black"} size={40} />
+            </span>
+          </Link>
+          </tooltip>
+        </div>
+        </div>
       <Routes>
         <Route
           path="/"
           element={
             <BasicList
-              name="React"
-              age={20}
+            name="React"
+            age={20}
               location={"Lalitpur"}
               coOrdinates={{
                 longitude: 80,
                 latitude: 27,
               }}
               primes={[2, 3, 5, 7, 11, 13]}
+              />
+            }
             />
-          }
-        />
         <Route
           path="basic"
           element={
             <BasicList
-              name="React"
-              age={20}
-              location={"Lalitpur"}
-              coOrdinates={{
-                longitude: 80,
-                latitude: 27,
-              }}
+            name="React"
+            age={20}
+            location={"Lalitpur"}
+            coOrdinates={{
+              longitude: 80,
+              latitude: 27,
+            }}
               primes={[2, 3, 5, 7, 11, 13]}
+              />
+            }
             />
-          }
-        />
         <Route path="billing" element={<BillingList />} />
+        <Route path="expenses" element={<ExpensesList />} />
         <Route path="*" element={<Counter />} />
       </Routes>
+      </div>
       {/* <div className="header-wapper">
         <div className="header">
-          <div className="Expenese">
-            <button
+        <div className="Expenese">
+        <button
               className={selected === "expenses" ? "selected-btn" : ""}
               onClick={(e) => setSelected("expenses")}
             >

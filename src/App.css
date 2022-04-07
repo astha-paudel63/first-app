@@ -75,3 +75,23 @@ button:hover {
 .welcome h1 {
 float:left;
 }
+.navigation>div{
+  float:right;
+  margin-left:20px;
+  margin-top: 20px;
+
+
+}
+.navigation-wapper{
+  background-color:  #61908799;
+}
+.welcome h1{
+  font-family: "Manrope", sans-serif;
+
+  font-family: "Press Start 2P", cursive;
+
+  font-family: "PT Sans Narrow", sans-serif;
+
+  font-family: "Special Elite", cursive;
+  color: black;
+}

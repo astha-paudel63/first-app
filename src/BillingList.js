@@ -141,14 +141,14 @@ const BillingList = () => {
           <span>Total</span>
           <span>
             {entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
-              (1 - discountRate / 100).toFixed(2)}
+              (1 - discountRate / 100).toFixed(1)}
           </span>
         </div>
         <div className="vat">
           <span>vat amount</span>
           <span>
             {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
-              (1 - discountRate / 100) *
+              (1 - discountRate / 100).toFixed(1)*
               vatRate) /
               100}
           </span>

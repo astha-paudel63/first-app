@@ -81,9 +81,13 @@ const BillingList = () => {
               <h3>Price</h3>
             </div>
             <div className="totall">
-              <h3>total</h3>
+              <h3>Total</h3>
             </div>
+            <div className="edit"><h3>Edit</h3></div>
+            <div className="remove"><h3>Remove</h3></div>
           </div>
+          <div className="data">
+
           {entries.map((en) => (
             <div className="entries">
               <div className="productName">
@@ -114,8 +118,12 @@ const BillingList = () => {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </div>
+      <div className="summary-wapper">
+
+     
       <div className="summary">
         <div className="subtotal">
           <span>subTotal</span>
@@ -155,6 +163,7 @@ const BillingList = () => {
             ).toFixed(2)}
           </span>
         </div>
+      </div>
       </div>
 
       <div className="type">

@@ -1,6 +1,9 @@
-import React, { useEffect, useState,useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ReactSelect from "react-select";
-import "./billing.css"; 
+import "./billing.css";
+import { MdEditNote } from "react-icons/md";
+import { MdOutlineDeleteSweep  } from "react-icons/md";
+
 
 const BillingList = () => {
   const [entries, setEntries] = useState([]);
@@ -8,6 +11,7 @@ const BillingList = () => {
   const [date, setDate] = useState(Date());
   const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState(null);
+  const [edit, setEdit] = useState(null);
   const [subTotal, setSubtotal] = useState(0);
   const [discountRate, setDiscoutRate] = useState(3);
   const [vatRate, setVatRate] = useState(13);
@@ -34,21 +38,29 @@ const BillingList = () => {
       },
     ]);
   };
-  const handelproductname=(e)=>{
+  const handelLetEditProduct = (product) => {
+    setEdit(true);
+    productInputRef?.current.focus();
+  };
+  const handelLetremoveProduct = (product) => {
+    setEdit(true);
+    productInputRef?.current.focus();
+  };
+  const handelproductname = (e) => {
     if (e.code === "Enter") {
       quantityInputRef?.current.focus();
     }
-  }
-  const handelproductquantity=(e)=>{
+  };
+  const handelproductquantity = (e) => {
     if (e.code === "Enter") {
       enterInputRef?.current.focus();
     }
-  }
-  const handelproductenter=(e)=>{
+  };
+  const handelproductenter = (e) => {
     if (e.code === "Enter") {
       productInputRef?.current.focus();
     }
-  }
+  };
 
   console.log(products, product);
   return (
@@ -58,20 +70,20 @@ const BillingList = () => {
           <h1>BILL SYSTEM</h1>
         </div>
         <div className="entries-wapper">
-        <div className="entries">
-              <div className="productName">
-                <h3>Product Name</h3>
-              </div>
-              <div className="quantity">
-                <h3>Quantity</h3>
-              </div>
-              <div className="price">
-                <h3>Price</h3>
-              </div>
-              <div className="totall">
-              <h3>total</h3>
-              </div>
+          <div className="entries">
+            <div className="productName">
+              <h3>Product Name</h3>
             </div>
+            <div className="quantity">
+              <h3>Quantity</h3>
+            </div>
+            <div className="price">
+              <h3>Price</h3>
+            </div>
+            <div className="totall">
+              <h3>total</h3>
+            </div>
+          </div>
           {entries.map((en) => (
             <div className="entries">
               <div className="productName">
@@ -86,62 +98,65 @@ const BillingList = () => {
               <div className="totall">
                 <span>{+en.price * +en.quantity}</span>
               </div>
+              <div className="edit-product">
+                <tooltip title="EDIT">
+                  <button onClick={(f) => handelLetEditProduct}>
+                    <MdEditNote color={"#fffff"} size={20} />
+                  </button>
+                </tooltip>
+              </div>
+              <div className="remove">
+                <tooltip title="DELETE">
+                  <button onClick={(e) => handelLetremoveProduct}>
+                    <MdOutlineDeleteSweep color={"#fffff"} size={20} />
+                  </button>
+                </tooltip>
+              </div>
             </div>
           ))}
         </div>
-        
       </div>
       <div className="summary">
         <div className="subtotal">
-          
-            <span>subTotal</span>
-            <span>
-              {entries.reduce((a, v) => a + +v.price * +v.quantity, 0)}
-            </span>
-          
+          <span>subTotal</span>
+          <span>{entries.reduce((a, v) => a + +v.price * +v.quantity, 0)}</span>
         </div>
         <div className="discount">
-          
-            <span>Discount amount</span>
-            <span>
-              {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
-                discountRate) /
-                100}
-            </span>
-          
+          <span>Discount amount</span>
+          <span>
+            {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
+              discountRate) /
+              100}
+          </span>
         </div>
         <div className="Total">
-          
-            <span>Total</span>
-            <span>
-              {entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
-                (1 - discountRate / 100).toFixed(2)}
-            </span>
-          
+          <span>Total</span>
+          <span>
+            {entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
+              (1 - discountRate / 100).toFixed(2)}
+          </span>
         </div>
         <div className="vat">
-          
-            <span>vat amount</span>
-            <span>
-              {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
-                (1 - discountRate / 100) *
-                vatRate) /
-                100}
-            </span>
-          
+          <span>vat amount</span>
+          <span>
+            {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
+              (1 - discountRate / 100) *
+              vatRate) /
+              100}
+          </span>
         </div>
         <div className="grand">
-          
-            <span>Grand Total</span>
-            <span>
-              {(entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
-                (1 - discountRate / 100) *
-                (1 + vatRate / 100)).toFixed(2)}
-            </span>
-          
+          <span>Grand Total</span>
+          <span>
+            {(
+              entries.reduce((a, v) => a + +v.price * +v.quantity, 0) *
+              (1 - discountRate / 100) *
+              (1 + vatRate / 100)
+            ).toFixed(2)}
+          </span>
         </div>
-        </div>
-                
+      </div>
+
       <div className="type">
         <div className="select">
           {/* <select value={product} onChange={(e) => setProduct(e.target.value)}>
@@ -153,16 +168,17 @@ const BillingList = () => {
           </select> */}
           <></>
           <h3> Product Name</h3>
-          <ReactSelect options={products.map(p => ({
-            ...p,
-            value: p.id,
-            label: p.name,
-          }))} 
-          onChange={a => setProduct(a.id)}
-          // value={product}
-          onKeyDown={a => console.log(a)}
-          placeholder="Select Product"
-          ref={productInputRef}
+          <ReactSelect
+            options={products.map((p) => ({
+              ...p,
+              value: p.id,
+              label: p.name,
+            }))}
+            onChange={(a) => setProduct(a.id)}
+            // value={product}
+            onKeyDown={(a) => console.log(a)}
+            placeholder="Select Product"
+            ref={productInputRef}
             onKeyPress={handelproductname}
           />
         </div>
@@ -177,27 +193,30 @@ const BillingList = () => {
           />
         </div>
         <div className="add">
-
-        <button onClick={handleAddEntry}
-        ref={enterInputRef}
-        onKeyPress={handelproductenter}>Add Entry</button>
+          <button
+            onClick={handleAddEntry}
+            ref={enterInputRef}
+            onKeyPress={handelproductenter}
+          >
+            Add Entry
+          </button>
         </div>
         <div className="intput-discount">
           <h3>Discount</h3>
           <input
-          value={discountRate}
-          type="number"
-          onChange={(e) => setDiscoutRate(e.target.value)}
+            value={discountRate}
+            type="number"
+            onChange={(e) => setDiscoutRate(e.target.value)}
           />
-          </div>
-          <div className="input-vat">
+        </div>
+        <div className="input-vat">
           <h3>VAT</h3>
-        <input
-          value={vatRate}
-          type="number"
-          onChange={(e) => setVatRate(e.target.value)}
+          <input
+            value={vatRate}
+            type="number"
+            onChange={(e) => setVatRate(e.target.value)}
           />
-          </div>
+        </div>
       </div>
     </div>
   );

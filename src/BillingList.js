@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import ReactSelect from "react-select";
 import "./billing.css"; 
 
@@ -11,6 +11,9 @@ const BillingList = () => {
   const [subTotal, setSubtotal] = useState(0);
   const [discountRate, setDiscoutRate] = useState(3);
   const [vatRate, setVatRate] = useState(13);
+  const productInputRef = useRef(null);
+  const quantityInputRef = useRef(null);
+  const enterInputRef = useRef(null);
 
   useEffect(() => {
     const productsRecorded = JSON.parse(localStorage.getItem("products"));
@@ -31,6 +34,21 @@ const BillingList = () => {
       },
     ]);
   };
+  const handelproductname=(e)=>{
+    if (e.code === "Enter") {
+      quantityInputRef?.current.focus();
+    }
+  }
+  const handelproductquantity=(e)=>{
+    if (e.code === "Enter") {
+      enterInputRef?.current.focus();
+    }
+  }
+  const handelproductenter=(e)=>{
+    if (e.code === "Enter") {
+      productInputRef?.current.focus();
+    }
+  }
 
   console.log(products, product);
   return (
@@ -133,6 +151,8 @@ const BillingList = () => {
               </option>
             ))}
           </select> */}
+          <></>
+          <h3> Product Name</h3>
           <ReactSelect options={products.map(p => ({
             ...p,
             value: p.id,
@@ -142,26 +162,36 @@ const BillingList = () => {
           // value={product}
           onKeyDown={a => console.log(a)}
           placeholder="Select Product"
+          ref={productInputRef}
+            onKeyPress={handelproductname}
           />
         </div>
         <div className="quantity">
+          <h3>Quantity</h3>
           <input
             value={quantity}
             type="number"
             onChange={(e) => setQuantity(e.target.value)}
+            ref={quantityInputRef}
+            onKeyPress={handelproductquantity}
           />
         </div>
+        <div className="add">
+
+        <button onClick={handleAddEntry}
+        ref={enterInputRef}
+        onKeyPress={handelproductenter}>Add Entry</button>
+        </div>
         <div className="intput-discount">
-
-
-        <input
+          <h3>Discount</h3>
+          <input
           value={discountRate}
           type="number"
           onChange={(e) => setDiscoutRate(e.target.value)}
           />
           </div>
           <div className="input-vat">
-
+          <h3>VAT</h3>
         <input
           value={vatRate}
           type="number"
@@ -169,10 +199,6 @@ const BillingList = () => {
           />
           </div>
       </div>
-        <div className="add">
-
-        <button onClick={handleAddEntry}>Add Entry</button>
-        </div>
     </div>
   );
 };

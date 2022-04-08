@@ -9,9 +9,6 @@ import React, { useState } from "react";
 import { isElementOfType } from "react-dom/test-utils";
 import { useEffect, useRef, Fragment } from "react";
 import ExpensesList from "./ExpensesList";
-import { MdOutlineDeleteSweep } from "react-icons/md";
-import { AiFillCar } from "react-icons/ai";
-import Modal from "react-modal";
 import BasicList from "./BasicList";
 import BillingList from "./BillingList";
 import { FaHome } from "react-icons/fa";
@@ -23,6 +20,7 @@ import { Routes, Route, Link } from "react-router-dom";
 
 function App() {
   const [selected, setSelected] = useState("basicc"); //control by setSelected
+  const [hovered,setHovered] = useState("");
 
   return (
     <>
@@ -37,33 +35,41 @@ function App() {
         <div className="billing">
           <tooltip title="Billing">
 
-          <Link to="/billing">
-            <span><RiBillFill color={"black"} size={40}/></span>
+          <Link to="/billing"
+          onMouseEnter={(e) => setHovered("billing")}
+          onMouseLeave={(e) =>setHovered("")}>
+            <span><RiBillFill color={hovered==="billing"?"rgb(106 88 132)":"black"} size={40}/></span>
             </Link>
           </tooltip>
         </div>
         <div className="basic">
           <tooltip title="Basic">
 
-          <Link to="/basic">
-            <span><RiEmotionNormalLine color={"black"} size={40} /></span>
+          <Link to="/basic"
+           onMouseEnter={(e) => setHovered("basic")}
+           onMouseLeave={(e) =>setHovered("")}>
+            <span><RiEmotionNormalLine color={hovered==="basic"?"rgb(106 88 132)":"black"} size={40} /></span>
             </Link>
           </tooltip>
         </div>
 
         <div className="expenses">
         <tooltip title="Expenses">
-          <Link to="/expenses">
-            <span><RiNewspaperLine color={"black"} size={40}/></span>
+          <Link to="/expenses"
+           onMouseEnter={(e) => setHovered("expense")}
+           onMouseLeave={(e) =>setHovered("")}>
+            <span><RiNewspaperLine color={hovered==="expense"?"rgb(106 88 132)":"black"} size={40}/></span>
               </Link>
         </tooltip>
         </div>
         <div className="home">
           <tooltip title="Home">
 
-          <Link to="/home">
+          <Link to="/home"
+           onMouseEnter={(e) => setHovered("home")}
+           onMouseLeave={(e) =>setHovered("")}>
             <span>
-              <FaHome color={"black"} size={40} />
+              <FaHome color={hovered==="home"?"rgb(106 88 132)":"black"} size={40} />
             </span>
           </Link>
           </tooltip>
